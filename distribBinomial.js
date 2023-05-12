@@ -26,30 +26,67 @@ function probabilidadeBinomial() {
   let entrada = Number(document.getElementById("entrada").value);
   let prob_success = Number(document.getElementById("prob_success").value);
   let variavel_x = Number(document.getElementById("variavel_x").value);
-  let combinacao = calcCombinacao(entrada, variavel_x);
-  let pro_binomial = 0;
 
-  pro_binomial =
-    combinacao *
-    Math.pow(prob_success, variavel_x) *
-    Math.pow(1 - prob_success, entrada - variavel_x);
+  if (entrada && prob_success && variavel_x) {
+    let combinacao = calcCombinacao(entrada, variavel_x);
+    let pro_binomial = 0;
+    let pro_binomial_menor_x = 0;
+    let pro_binomial_maior_x = 0;
 
-  document.getElementById("table_medidas").innerHTML = `
-	<thead>
-    <tr>
-      <th scope="col">P(X)</th>
-      <th scope="col">Resultados</th>
-    </tr>
-		</thead>
-		<tbody>
-			<tr>
-				<th scope="row">P(X = ${variavel_x})</th>
-				<td>${pro_binomial}</td>
-			</tr>
-		</tbody>
-	`;
+    pro_binomial =
+      combinacao *
+      Math.pow(prob_success, variavel_x) *
+      Math.pow(1 - prob_success, entrada - variavel_x);
+
+    for (let i = 0; i <= variavel_x; i++) {
+      pro_binomial_menor_x +=
+        calcCombinacao(entrada, i) *
+        Math.pow(prob_success, i) *
+        Math.pow(1 - prob_success, entrada - i);
+    }
+
+    for (let i = variavel_x; i <= entrada; i++) {
+      pro_binomial_maior_x +=
+        calcCombinacao(entrada, i) *
+        Math.pow(prob_success, i) *
+        Math.pow(1 - prob_success, entrada - i);
+    }
+
+    document.getElementById("table_medidas").innerHTML = `
+	    <thead>
+        <tr>
+          <th scope="col">P(X)</th>
+          <th scope="col">Resultados</th>
+        </tr>
+	    	</thead>
+	    	<tbody>
+	    		<tr>
+	    			<th scope="row">P(X = ${variavel_x})</th>
+	    			<td>${pro_binomial}</td>
+	    		</tr>
+          <tr>
+	    			<th scope="row">P(X >= ${variavel_x})</th>
+	    			<td>${pro_binomial_maior_x}</td>
+	    		</tr>
+          <tr>
+	    			<th scope="row">P(X <= ${variavel_x})</th>
+	    			<td>${pro_binomial_menor_x}</td>
+	    		</tr>
+          
+	    	</tbody>
+	    `;
+    document.getElementById("new").style.display = "initial";
+  } else {
+    alert("Adicione algum dado");
+  }
+}
+
+function reset() {
+  window.location.reload();
 }
 
 document
   .getElementById("calcDistribBinomial")
   .addEventListener("click", probabilidadeBinomial);
+
+document.getElementById("new").addEventListener("click", reset);

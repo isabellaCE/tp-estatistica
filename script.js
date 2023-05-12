@@ -9,6 +9,7 @@ var variancia = 0;
 var desvio_padrao = 0;
 var coef_variacao = 0;
 var dado = 0;
+const myModal = new bootstrap.Modal("#exampleModal");
 
 function sendDados() {
   dado = Number(document.getElementById("dados").value);
@@ -19,6 +20,9 @@ function sendDados() {
     if (dados_brutos.length < 200) {
       dados_brutos.push(dado);
       document.getElementById("dados").value = "";
+      document.getElementById("show_dados").innerHTML = `
+		    Dados Brutos: ${dados_brutos}
+	    `;
     } else {
       alert("Não é possível adicionar mais dados!");
     }
@@ -108,45 +112,49 @@ function calcCoefVariacao() {
 }
 
 function medidasPosicao() {
+  if (!dados_brutos.length) {
+    alert("Por favor, adicione algum dado");
+  } else {
     calcFreq();
 
     document.getElementById("table_medidas").innerHTML = `
-	<thead>
-    <tr>
-      <th scope="col">Medidas</th>
-      <th scope="col">Resultados</th>
-    </tr>
-		</thead>
-		<tbody>
-			<tr>
-				<th scope="row">Média</th>
-				<td>${calcMedia()}</td>
-			</tr>
-			<tr>
-				<th scope="row">Mediana</th>
-				<td>${calcMediana()}</td>
-			</tr>
-			<tr>
-				<th scope="row">Moda</th>
-				<td>${moda}</td>
-			</tr>
-			<tr>
-				<th scope="row">Variância</th>
-				<td>${calcVariancia()}</td>
-			</tr>
-			<tr>
-				<th scope="row">Desvio Padão</th>
-				<td>${calcDesvioPadrao()}</td>
-			</tr>
-			<tr>
-				<th scope="row">Coeficiente de variação</th>
-				<td>${calcCoefVariacao()}</td>
-			</tr>
-		</tbody>
-	`;
+	    <thead>
+        <tr>
+          <th scope="col">Medidas</th>
+          <th scope="col">Resultados</th>
+        </tr>
+	    	</thead>
+	    	<tbody>
+	    		<tr>
+	    			<th scope="row">Média</th>
+	    			<td>${calcMedia()}</td>
+	    		</tr>
+	    		<tr>
+	    			<th scope="row">Mediana</th>
+	    			<td>${calcMediana()}</td>
+	    		</tr>
+	    		<tr>
+	    			<th scope="row">Moda</th>
+	    			<td>${moda}</td>
+	    		</tr>
+	    		<tr>
+	    			<th scope="row">Variância</th>
+	    			<td>${calcVariancia()}</td>
+	    		</tr>
+	    		<tr>
+	    			<th scope="row">Desvio Padão</th>
+	    			<td>${calcDesvioPadrao()}</td>
+	    		</tr>
+	    		<tr>
+	    			<th scope="row">Coeficiente de variação</th>
+	    			<td>${calcCoefVariacao()}</td>
+	    		</tr>
+	    	</tbody>
+	    `;
 
     document.getElementById("dados").disabled = true;
     document.getElementById("new").style.display = "initial";
+  }
 }
 
 function reset() {
@@ -164,4 +172,8 @@ document.getElementById("dados").addEventListener("keyup", function (event) {
     event.preventDefault();
     sendDados();
   }
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  myModal.show();
 });
