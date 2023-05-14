@@ -27,7 +27,11 @@ function probabilidadeBinomial() {
   let prob_success = Number(document.getElementById("prob_success").value);
   let variavel_x = Number(document.getElementById("variavel_x").value);
 
-  if (entrada && prob_success && variavel_x) {
+  if (
+    entrada !== undefined &&
+    prob_success !== undefined &&
+    variavel_x !== undefined
+  ) {
     let combinacao = calcCombinacao(entrada, variavel_x);
     let pro_binomial = 0;
     let pro_binomial_menor_x = 0;

@@ -13,8 +13,8 @@ const myModal = new bootstrap.Modal("#exampleModal");
 
 function sendDados() {
   dado = Number(document.getElementById("dados").value);
-  console.log(dado);
-  if (!dado) {
+
+  if (dado === undefined || dado === null) {
     alert("Adicione um dado");
   } else {
     if (dados_brutos.length < 200) {
@@ -75,12 +75,10 @@ function calcModa(ocorrencias) {
     for (var element in ocorrencias) {
       if (ocorrencias[element] > maior) {
         maior = ocorrencias[element];
-        console.log(maior);
         chave_maior = element;
       }
     }
     moda.push(chave_maior);
-    console.log(chave_maior);
     for (var element in ocorrencias) {
       if (element !== chave_maior && ocorrencias[element] === maior) {
         chave = element;
@@ -88,7 +86,6 @@ function calcModa(ocorrencias) {
       }
     }
   }
-  console.log(moda);
   return moda;
 }
 
@@ -96,7 +93,6 @@ function calcVariancia() {
   dados_brutos.forEach((element) => {
     somatorio += Math.pow(element - media, 2);
   });
-  console.log(somatorio);
   variancia = somatorio / (dados_brutos.length - 1);
   return variancia;
 }
@@ -127,11 +123,11 @@ function medidasPosicao() {
 	    	<tbody>
 	    		<tr>
 	    			<th scope="row">Média</th>
-	    			<td>${calcMedia()}</td>
+	    			<td>${calcMedia().toFixed(2)}</td>
 	    		</tr>
 	    		<tr>
 	    			<th scope="row">Mediana</th>
-	    			<td>${calcMediana()}</td>
+	    			<td>${calcMediana().toFixed(2)}</td>
 	    		</tr>
 	    		<tr>
 	    			<th scope="row">Moda</th>
@@ -139,15 +135,15 @@ function medidasPosicao() {
 	    		</tr>
 	    		<tr>
 	    			<th scope="row">Variância</th>
-	    			<td>${calcVariancia()}</td>
+	    			<td>${calcVariancia().toFixed(2)}</td>
 	    		</tr>
 	    		<tr>
 	    			<th scope="row">Desvio Padão</th>
-	    			<td>${calcDesvioPadrao()}</td>
+	    			<td>${calcDesvioPadrao().toFixed(2)}</td>
 	    		</tr>
 	    		<tr>
 	    			<th scope="row">Coeficiente de variação</th>
-	    			<td>${calcCoefVariacao()}</td>
+	    			<td>${calcCoefVariacao().toFixed(2)}</td>
 	    		</tr>
 	    	</tbody>
 	    `;

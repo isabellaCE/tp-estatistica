@@ -2,7 +2,7 @@ function permutacaoSimples() {
   let valor = Number(document.getElementById("permut_simples").value);
   let permutacao_simples = 1;
 
-  if (valor) {
+  if (valor !== undefined || valor !== null) {
     for (let i = 1; i <= valor; i++) {
       permutacao_simples *= i;
     }
@@ -22,16 +22,14 @@ function arranjoSimples() {
   let denominador = 1;
   let arranjo_simples = 1;
 
-  if (elementos && arranjos) {
+  if (elementos !== undefined && arranjos !== undefined) {
     for (let i = 1; i <= elementos; i++) {
       numerador *= i;
     }
-    console.log(numerador);
 
     for (let i = 1; i <= elementos - arranjos; i++) {
       denominador *= i;
     }
-    console.log(denominador);
 
     arranjo_simples = numerador / denominador;
 
@@ -56,7 +54,7 @@ function combinacaoSimples() {
   let denominador = 1;
   let combinacao_simples = 1;
 
-  if (elementos && subconjuntos) {
+  if (elementos !== undefined && subconjuntos !== undefined) {
     for (let i = 1; i <= elementos; i++) {
       fatorial_elementos *= i;
     }
@@ -88,7 +86,7 @@ function arranjoRepeticao() {
   let repeticao = Number(document.getElementById("arranjo_repeticao").value);
   let arranjo_repeticao = 0;
 
-  if (elementos && repeticao) {
+  if (elementos !== undefined && repeticao !== undefined) {
     arranjo_repeticao = Math.pow(repeticao, elementos);
 
     document.getElementById("result_arranjo_repeticao").innerHTML = `
@@ -111,7 +109,7 @@ function combinacaoRepeticao() {
   let combinacao_repeticao = 0;
   let fat_numerador = elementos + elementos_subconjunto - 1;
 
-  if (elementos && elementos_subconjunto) {
+  if (elementos !== undefined && elementos_subconjunto !== undefined) {
     for (let i = 1; i <= fat_numerador; i++) {
       numerador *= i;
     }
@@ -144,9 +142,9 @@ function permutacaoRepeticao() {
   );
   let numerador = 1;
   let denominador = 1;
-  let permut_repeticao;
+  let permut_repeticao = 0;
 
-  if (elementos && elementos_repeticao) {
+  if (elementos !== undefined && elementos_repeticao !== undefined) {
     for (let i = 1; i <= elementos; i++) {
       numerador *= i;
     }
@@ -158,7 +156,7 @@ function permutacaoRepeticao() {
     permut_repeticao = numerador / denominador;
 
     document.getElementById("result_permut_repeticao").innerHTML = `
-    Permutação com Repetição: ${combinacao_repeticao}
+    Permutação com Repetição: ${permut_repeticao}
   `;
     document.getElementById("new").style.display = "initial";
   } else {
